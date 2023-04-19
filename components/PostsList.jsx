@@ -32,12 +32,16 @@ function PostsList(props) {
         <>
             {/* Modal component is an overlay of the NewPost compt */}
             {/* passing fnName: fn itself vs fnName(): return value of fn */}
-            <Modal onClose={hideModalHandler}>
+            {/* 'Modal' is displayed if state is truthy */}            
+            {modalIsVisible && (
+                // conditional content to be rendered                
+                <Modal onClose={hideModalHandler}>
                 <NewPost  
                     onBodyChange={bodyChangeHandler} 
                     onAuthorChange={authorChangeHandler}>
                 </NewPost>
-            </Modal>            
+                </Modal>
+            )}
             <ul className={classes.posts}>
                 <Post author={enteredAuthor} book={enteredBody}></Post>
                 <Post author="Jeffrey Archer" book="Kane & Abel"/>

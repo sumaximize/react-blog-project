@@ -1,12 +1,15 @@
 import classes from './Modal.module.css'
 
 // special 'children' prop
-function Modal({ children }) {
+// 'onClose' is the fn prop passed by PostsList
+function Modal({ children, onClose }) {
     return (
         <>
-            <div className={classes.backdrop}></div>       
+            {/* 'div' for the black backdrop */}
+            <div className={classes.backdrop} onClick={onClose}></div>       
             {/*  'open' prop is needed to display dialog box*/}     
             <dialog open={true} className={classes.modal}>
+                {/* 'children' is the NewPost form compt */}
                 {children}
             </dialog>
         </>
