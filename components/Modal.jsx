@@ -6,6 +6,7 @@ function Modal({ children, onClose }) {
     return (
         <>
             {/* 'div' for the black backdrop */}
+            {/* onClose -> onStopPosting -> hideModalHandler -> setModalIsVisible(false) */}
             <div className={classes.backdrop} onClick={onClose}></div>       
             {/*  'open' prop is needed to display dialog box*/}     
             <dialog open={true} className={classes.modal}>
