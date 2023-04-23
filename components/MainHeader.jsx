@@ -11,6 +11,7 @@ function MainHeader({ onCreatePost }) {
         React Poster
       </h1>
       <p>
+        {/* onCreatePost -> showModalHandler -> setModalIsVisble(true) */}
         <button className={classes.button} onClick={onCreatePost}>
           <MdPostAdd size={18} />
           New Post

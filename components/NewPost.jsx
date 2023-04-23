@@ -2,8 +2,9 @@ import { useState } from "react";
 import classes from "./NewPost.module.css"
 
 
-function NewPost({onCancel}) {
+function NewPost({onCancel, onAddPost}) {
     // enteredBody & enteredAuthor are state variable(s)
+    // setEnteredBody & setEnteredAuthor are state updating functions
     const [enteredBody, setEnteredBody] = useState('');
     const [enteredAuthor, setEnteredAuthor] = useState('');        
 
@@ -27,8 +28,9 @@ function NewPost({onCancel}) {
             body: enteredBody,
             author: enteredAuthor
         };
-        console.log(postData);
+        
         // hideModalHandler() on submitting
+        onAddPost(postData);
         onCancel();
             
     }
