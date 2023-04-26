@@ -22,7 +22,7 @@ function NewPost({onCancel, onAddPost}) {
     
     // to submit form data
     function submitHandler(event) {
-        // prevents request to server
+        // prevents request to server, i.e form
         event.preventDefault();
         const postData = {
             body: enteredBody,

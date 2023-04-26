@@ -12,9 +12,20 @@ function PostsList({isPosting, onStopPosting}) {
 
     // Stores post data when form is submitted
     function addPostHandler(postData) {
-        // use fn execution to update state if new state is based
-        //  on existing states: postsN = postsN-1 + post
+        // to fetch & send data, i.e request api
+        fetch('http://localhost:8080/posts', {
+            method: 'POST',
+            // converts to JSON string
+            body: JSON.stringify(postData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        // use fn execution to update state if new state is based on existing states
+        // [postData, ...posts] == (existingPosts) => [postData, ...existingPosts]
+        // react passes current state var value as parameter to updating fn
         setPosts((existingPosts) => [postData, ...existingPosts]);
+
     }
 
     return (
@@ -25,10 +36,10 @@ function PostsList({isPosting, onStopPosting}) {
             {isPosting && (
                 // conditional content to be rendered                
                 <Modal onClose={onStopPosting}>
-                <NewPost  
-                    onCancel={onStopPosting} 
-                    onAddPost={addPostHandler}>
-                </NewPost>
+                    <NewPost  
+                        onCancel={onStopPosting} 
+                        onAddPost={addPostHandler}>
+                    </NewPost>
                 </Modal>
             )}            
             {posts.length > 0 && (
