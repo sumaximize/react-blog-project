@@ -9,14 +9,19 @@ function PostsList({ isPosting, onStopPosting }) {
   // 'posts' i.e PostsList is an array of posts
   // NewPost data stored in --> PostsList
   const [posts, setPosts] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
+  // side-effect i.e making HTTP request to read db data
   useEffect(() => {
     // async fn is fetchPosts which will return a Promise
     async function fetchPosts() {
+      setIsFetching(true);
       const response = await fetch('http://localhost:8080/posts')
+      // post data is read
       const resData = await response.json();
       // updates state
       setPosts(resData.posts);
+      setIsFetching(false);
     }    
     // calling the async fn within useEffect
     fetchPosts();
@@ -46,7 +51,7 @@ function PostsList({ isPosting, onStopPosting }) {
       {/* Modal component is an overlay of the NewPost compt */}
       {/* passing fnName: fn itself vs fnName(): return value of fn */}
       {/* 'Modal' is displayed if state is truthy */}
-      {isPosting && (
+      {!isFetching && isPosting && (
         // conditional content to be rendered
         <Modal onClose={onStopPosting}>
           <NewPost
@@ -55,7 +60,7 @@ function PostsList({ isPosting, onStopPosting }) {
           ></NewPost>
         </Modal>
       )}
-      {posts.length > 0 && (
+      {!isFetching && posts.length > 0 && (
         <ul className={classes.posts}>
           {/* returns an array of Post compts */}
           {/* post obj --> JSX elements */}
@@ -67,10 +72,16 @@ function PostsList({ isPosting, onStopPosting }) {
           ))}
         </ul>
       )}
-      {posts.length === 0 && (
+      {!isFetching && posts.length === 0 && (
         <div style={{ textAlign: "center", color: "white" }}>
           <h2>There are no posts yet</h2>
           <p>Start adding some!</p>
+        </div>
+      )}
+      {isFetching && (
+        // inline jsx styles
+        <div style={{textAlign: 'center', color: 'tomato'}}>
+          <p>Loading...</p>          
         </div>
       )}
     </>
