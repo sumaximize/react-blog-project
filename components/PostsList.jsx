@@ -2,13 +2,27 @@ import classes from "./PostsList.module.css";
 import Modal from "./Modal";
 import NewPost from "./NewPost";
 import Post from "./Post";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // destructuring assignment of obj: const {isPosting, onStopPosting} = props;
 function PostsList({ isPosting, onStopPosting }) {
   // 'posts' i.e PostsList is an array of posts
   // NewPost data stored in --> PostsList
   const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    // async fn is fetchPosts which will return a Promise
+    async function fetchPosts() {
+      const response = await fetch('http://localhost:8080/posts')
+      const resData = await response.json();
+      // updates state
+      setPosts(resData.posts);
+    }    
+    // calling the async fn within useEffect
+    fetchPosts();
+    // [dependency] controls execution of useEffect
+    // empty array implies single execution upon rendering PostsList
+  }, []);
 
   // Stores post data when form is submitted
   function addPostHandler(postData) {
