@@ -51,6 +51,7 @@ function PostsList({ isPosting, onStopPosting }) {
       {/* Modal component is an overlay of the NewPost compt */}
       {/* passing fnName: fn itself vs fnName(): return value of fn */}
       {/* 'Modal' is displayed if state is truthy */}
+      {/* Case 1: New Post */}
       {!isFetching && isPosting && (
         // conditional content to be rendered
         <Modal onClose={onStopPosting}>
@@ -60,6 +61,7 @@ function PostsList({ isPosting, onStopPosting }) {
           ></NewPost>
         </Modal>
       )}
+      {/* Case 2: Display Existing Posts */}
       {!isFetching && posts.length > 0 && (
         <ul className={classes.posts}>
           {/* returns an array of Post compts */}
@@ -67,17 +69,19 @@ function PostsList({ isPosting, onStopPosting }) {
           {/* React requires a 'key' prop to correctly render an array of compts; 
                     'key' should be unique; 
                     'key' is not used in compts */}
-          {posts.map((post) => (
+          {posts.map((post) => {
             <Post key={post.body} author={post.author} body={post.body} />
-          ))}
+          })}
         </ul>
       )}
+      {/* Case 3: No Posts to display */}
       {!isFetching && posts.length === 0 && (
         <div style={{ textAlign: "center", color: "white" }}>
           <h2>There are no posts yet</h2>
           <p>Start adding some!</p>
         </div>
       )}
+      {/* Case 4: Loading state */}
       {isFetching && (
         // inline jsx styles
         <div style={{textAlign: 'center', color: 'tomato'}}>
